@@ -6,6 +6,14 @@ defmodule Quantum.Application do
   use Application
 
   def start(_type, _args) do
+    :ok = :telemetry.attach(
+      # unique handler id
+      "quantum-telemetry-metrics",
+      [:phoenix, :request],
+      &Quantum.Telemetry.Metrics.handle_event/4,
+      nil
+    )
+
     # List all child processes to be supervised
     children = [
       # Start the Ecto repository
