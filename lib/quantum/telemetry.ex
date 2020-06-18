@@ -16,7 +16,16 @@ defmodule Quantum.Telemetry do
 
   defp metrics do
     [
-      # coming soon!
+      summary(
+        "phoenix.request.duration",
+        unit: {:native, :millisecond},
+        tags: [:request_path]
+      ),
+
+      counter(
+        "phoenix.request.count",
+        tags: [:request_path]
+      )
     ]
   end
 end
