@@ -11,9 +11,10 @@ defmodule Quantum.Application do
       # Start the Ecto repository
       Quantum.Repo,
       # Start the endpoint when the application starts
-      QuantumWeb.Endpoint
+      QuantumWeb.Endpoint,
       # Starts a worker by calling: Quantum.Worker.start_link(arg)
       # {Quantum.Worker, arg},
+      Quantum.Telemetry
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
