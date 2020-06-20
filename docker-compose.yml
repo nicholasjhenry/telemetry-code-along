@@ -1,5 +1,15 @@
 version: "3"
 services:
+  db:
+    image: postgres:12.2
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      PGDATA: /pgdata
+    volumes:
+      - postgres-data:/pgdata
   graphite-statsd:
     image: graphiteapp/docker-graphite-statsd
     ports:
@@ -8,3 +18,5 @@ services:
           - 8125:8125/udp
           - 8126:8126
           - 80:80
+volumes:
+  postgres-data: {}

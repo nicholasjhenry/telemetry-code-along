@@ -16,6 +16,7 @@ defmodule Quantum.Telemetry do
 
   defp metrics do
     [
+      # Phoenix Telemetry
       summary(
         "phoenix.router_dispatch.stop.duration",
         unit: {:native, :millisecond},
@@ -37,6 +38,14 @@ defmodule Quantum.Telemetry do
       counter(
         "phoenix.socket_connected.count",
         tags: [:endpoint]
+      ),
+
+      # Ecto Telemetry
+
+      counter(
+        "quantum.repo.query.count",
+        tag_values: &__MODULE__.query_metatdata/1,
+        tags: [:source, :command]
       )
     ]
   end
@@ -47,5 +56,9 @@ defmodule Quantum.Telemetry do
 
   def error_request_metadata(%{conn: %{request_path: request_path}, status: status}) do
     %{status: status, request_path: request_path}
+  end
+
+  def query_metatdata(%{source: source, result: {_, %{command: command}}}) do
+    %{source: source, command: command}
   end
 end
